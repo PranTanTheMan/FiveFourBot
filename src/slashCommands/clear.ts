@@ -22,7 +22,8 @@ const ClearCommand: SlashCommand = {
     interaction.channel?.messages
       .fetch({ limit: messageCount })
       .then(async (msgs) => {
-        if (interaction.channel?.type === ChannelType.DM) return;
+        if ((interaction.channel?.type as ChannelType) === ChannelType.DM)
+          return;
         const deletedMessages = await interaction.channel?.bulkDelete(
           msgs,
           true
