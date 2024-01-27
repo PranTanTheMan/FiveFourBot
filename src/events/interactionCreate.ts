@@ -1,5 +1,6 @@
 import { Interaction } from "discord.js";
 import { BotEvent } from "../types";
+import pickerCommand from "../slashCommands/picker";
 
 const event: BotEvent = {
   name: "interactionCreate",
@@ -58,6 +59,9 @@ const event: BotEvent = {
       const command = interaction.client.slashCommands.get(
         interaction.customId
       );
+      if (interaction.customId === "pickerModal") {
+        pickerCommand.modal?.(interaction);
+      }
       if (!command) {
         console.error(`No command matching ${interaction.customId} was found.`);
         return;

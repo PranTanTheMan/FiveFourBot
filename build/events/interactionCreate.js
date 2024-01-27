@@ -1,8 +1,13 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const picker_1 = __importDefault(require("../slashCommands/picker"));
 const event = {
     name: "interactionCreate",
     execute: (interaction) => {
+        var _a;
         if (interaction.isChatInputCommand()) {
             let command = interaction.client.slashCommands.get(interaction.commandName);
             let cooldown = interaction.client.cooldowns.get(`${interaction.commandName}-${interaction.user.username}`);
@@ -41,6 +46,9 @@ const event = {
         }
         else if (interaction.isModalSubmit()) {
             const command = interaction.client.slashCommands.get(interaction.customId);
+            if (interaction.customId === "pickerModal") {
+                (_a = picker_1.default.modal) === null || _a === void 0 ? void 0 : _a.call(picker_1.default, interaction);
+            }
             if (!command) {
                 console.error(`No command matching ${interaction.customId} was found.`);
                 return;
